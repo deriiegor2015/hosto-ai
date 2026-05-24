@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Hosto AI</title>
+</head>
+<body>
+  <h1>Hosto AI — чат</h1>
+  <input type="text" id="input" placeholder="Напиши Hosto...">
+  <button onclick="send()">Надіслати</button>
+  <div id="output"></div>
+
+  <script>
+    const HOSTO_API_KEY = "hosto_sk_123456789"; // ключ із hosto.ai
+
+    async function send() {
+      const text = document.getElementById("input").value;
+      const res = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": HOSTO_API_KEY
+        },
+        body: JSON.stringify({ text })
+      });
+
+      const data = await res.json();
+      document.getElementById("output").innerHTML +=
+        "<p><b>Ти:</b> " + text + "</p>" +
+        "<p><b>Hosto:</b> " + data.reply + "</p>";
+    }
+  </script>
+</body>
+</html>
